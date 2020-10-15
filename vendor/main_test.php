@@ -4,11 +4,11 @@ require __DIR__ . '/autoload.php';
 
 use Ddeboer\Imap\Server;
 
-$server = new Server('imap.gmail.com');
-
+// $server = new Server('imap.gmail.com');
+$server = new Server('export.imap.mail.yahoo.com');
 // $connection is instance of \Ddeboer\Imap\Connection
-$connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
-
+// $connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
+$connection = $server->authenticate('andy860826@yahoo.com.tw', 'rcfftxtbiwgjrjkf');
 
 $mailboxes = $connection->getMailboxes();
 
@@ -23,7 +23,7 @@ foreach ($mailboxes as $mailbox) {
     printf('Mailbox "%s" has %s messages', $mailbox->getName(), $mailbox->count());
 }
 
-$mailbox = $connection->getMailbox('INBOX');
+$mailbox = $connection->getMailbox('Inbox');
 
 $messages = $mailbox->getMessages();
 
@@ -40,9 +40,10 @@ foreach ($messages as $message) {
     } else{
         echo "＃＃＃＃＃＃＃＃還沒看過還沒看過＃＃＃＃＃＃＃＃＃".'<br>';
     }
-    $message->setFlag('\\Seen');
+    //$message->setFlag('\\Seen');
 
     echo '以下是$message->getId()'.'<br>';
+    echo time();
     var_dump(htmlspecialchars($message->getId())); 
     /**
      * 這個ID是unique的，存在DB要用這個當Primary Key
@@ -62,22 +63,27 @@ foreach ($messages as $message) {
 
 
     echo '以下是$message->getFrom()->getName()'.'<br>';
+    echo time();
     var_dump($message->getFrom()->getName()); //寄件人姓名
     echo '<br>'.'<--------------------------------->'.'<br>';
 
     echo '以下是$message->getFrom()->getAddress()'.'<br>';
+    echo time();
     var_dump($message->getFrom()->getAddress());  //寄件人信箱
     echo '<br>'.'<--------------------------------->'.'<br>';
 
     echo '以下是$message->getSubject()'.'<br>';
+    echo time();
     var_dump($message->getSubject()); //信件標題
     echo '<br>'.'<--------------------------------->'.'<br>';
 
     echo '以下是$message->getTo()'.'<br>';
+    echo time();
     var_dump($message->getTo()); 
     echo '<br>'.'<--------------------------------->'.'<br>';
 
     echo '以下是$message->getDate()'.'<br>';
+    echo time();
     var_dump(date('Y-m-d H:i:s',$message->getDate()->getTimestamp())); 
     /**'Y-m-d H:i:s'
      * 這個是信件的時間，格式如下：
@@ -89,7 +95,16 @@ foreach ($messages as $message) {
     // var_dump($message->getBodyHtml()); 
     // echo '<br>'.'<--------------------------------->'.'<br>';
 
+    echo '以下是$message->getBodyHtml()'.'<br>';
+    echo time();
+    var_dump($message->getBodyHtml()); 
+    /**
+     * getBodyHtml
+     */
+    echo '<br>'.'<--------------------------------->'.'<br>';
+    
     echo '以下是$message->getBodyText()'.'<br>';
+    echo time();
     var_dump($message->getBodyText()); 
     /**
      * 這個就是文字內容了
@@ -97,6 +112,7 @@ foreach ($messages as $message) {
     echo '<br>'.'<--------------------------------->'.'<br>';
 
     echo '以下是$message->getAttachments()'.'<br>';
+    echo time();
     var_dump($message->getAttachments()); 
     /**
      * 附件
@@ -120,6 +136,6 @@ foreach ($messages as $message) {
     echo '<br>'."=============大分隔線-區分不同封信件=============".'<br>';
 }
 
-
+echo time();
 
 ?>

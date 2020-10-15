@@ -17,7 +17,7 @@
           <td>寄件人地址</td>
           <td>寄件時間</td>
           <td>信件內文</td>
-          <td>附件內容(僅顯示link)</td>
+          <td>附件內容</td>
         </tr>
       </thead>
       <tbody>

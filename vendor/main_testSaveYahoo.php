@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/autoload.php';
+echo time();
 
 use Ddeboer\Imap\Server;
 
@@ -50,7 +51,7 @@ foreach ($messages as $message) {
         }
       
 
-        $insertSQL_mail = "INSERT INTO mail(`message_ID`, `from_who`, `from_address`, `title`, `time`, `message_text`, `message_file_location`) 
+        $insertSQL_mail = "INSERT INTO yahoo_huge(`message_ID`, `from_who`, `from_address`, `title`, `time`, `message_text`, `message_file_location`) 
         VALUES ('$message_id', '$from_who', '$from_address', '$title', '$time', '$text', '$file_path');";        
         
         $DB_Connect->query($insertSQL_mail);
@@ -63,3 +64,5 @@ foreach ($messages as $message) {
 
 echo "收件匣中有".$mailbox->count()."封信".'<br>';
 echo "其中有".$count_seen."封信已經讀過，並未存到資料庫中。".'<br>';
+
+echo time();
