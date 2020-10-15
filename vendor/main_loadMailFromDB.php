@@ -25,7 +25,7 @@
         
         include 'DBinfo.php';
         
-        $query = "SELECT * FROM `mail` ORDER BY `time`DESC";
+        $query = "SELECT * FROM `yahoo_huge` ORDER BY `time`DESC";
         $result = $DB_Connect->query($query);
         if (!$result) die("Fatal Error");
         

@@ -5,14 +5,14 @@ echo time();
 use Ddeboer\Imap\Server;
 
 // $server = new Server('imap.gmail.com');
-$server = new Server('export.imap.mail.yahoo.com');
+$server = new Server('pop.mail.yahoo.com');
 include 'DBinfo.php';
 // $connection is instance of \Ddeboer\Imap\Connection
 // $connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
 $connection = $server->authenticate('andy860826@yahoo.com.tw', 'rcfftxtbiwgjrjkf');
 
 // $mailbox = $connection->getMailbox('INBOX');//只讀主收件匣，垃圾桶等等不管
-$mailbox = $connection->getMailbox('Inbox');
+$mailbox = $connection->getMailbox('INBOX');
 $messages = $mailbox->getMessages();
 
 $count_seen = 0;
@@ -25,12 +25,13 @@ foreach ($messages as $message) {
     } else{
         // $message->setFlag('\\Seen');
 
+        // 底下這一長串在儲存要寫入DB的變數
         $message_id = htmlspecialchars($message->getId());
-        $from_who = htmlspecialchars($message->getFrom()->getName());
-        $from_address = htmlspecialchars($message->getFrom()->getAddress());
-        $title = htmlspecialchars ($message->getSubject());
+        $from_who = $DB_Connect->real_escape_string(htmlspecialchars($message->getFrom()->getName()));
+        $from_address = $DB_Connect->real_escape_string(htmlspecialchars($message->getFrom()->getAddress()));
+        $title = $DB_Connect->real_escape_string(htmlspecialchars ($message->getSubject()));
         $time = date('Y-m-d H:i:s',$message->getDate()->getTimestamp());
-        $text = htmlspecialchars ($message->getBodyHtml());
+        $text = $DB_Connect->real_escape_string(htmlspecialchars ($message->getBodyHtml()));
         
 
         if($message->getAttachments()!=array()){//存附件
@@ -54,6 +55,10 @@ foreach ($messages as $message) {
         $insertSQL_mail = "INSERT INTO yahoo_huge(`message_ID`, `from_who`, `from_address`, `title`, `time`, `message_text`, `message_file_location`) 
         VALUES ('$message_id', '$from_who', '$from_address', '$title', '$time', '$text', '$file_path');";        
         
+
+        echo "*********以下是SQL指令*********".'<br>';
+        echo "$insertSQL_mail".'<br>';
+        echo "*********以上是SQL指令*********。".'<br>';
         $DB_Connect->query($insertSQL_mail);
 
         echo '<br>'."=============大分隔線-區分不同封信件=============".'<br>';

@@ -5,7 +5,7 @@ require __DIR__ . '/autoload.php';
 use Ddeboer\Imap\Server;
 
 // $server = new Server('imap.gmail.com');
-$server = new Server('export.imap.mail.yahoo.com');
+$server = new Server('pop.mail.yahoo.com');
 // $connection is instance of \Ddeboer\Imap\Connection
 // $connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
 $connection = $server->authenticate('andy860826@yahoo.com.tw', 'rcfftxtbiwgjrjkf');
@@ -23,7 +23,7 @@ foreach ($mailboxes as $mailbox) {
     printf('Mailbox "%s" has %s messages', $mailbox->getName(), $mailbox->count());
 }
 
-$mailbox = $connection->getMailbox('Inbox');
+$mailbox = $connection->getMailbox('INBOX');
 
 $messages = $mailbox->getMessages();
 
