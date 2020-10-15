@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Taipei");
-require __DIR__ . '/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Ddeboer\Imap\Server;
 
