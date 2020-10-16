@@ -14,7 +14,6 @@ function getDataFromMailbox($message)
         'time' => date('Y-m-d H:i:s',$message->getDate()->getTimestamp()),
         'message_text' => $message->getBodyHtml()
     );
-
     return $dataArray;
 }
 
@@ -25,7 +24,7 @@ function getDataFromMailbox($message)
  */
 function handleSpecialChar($dataArray)
 {
-    foreach ($dataArray as $value) {
+    foreach ($dataArray as &$value) {
         $value = htmlspecialchars($value);
     }
     return $dataArray;
@@ -87,5 +86,46 @@ function insertDataToDB($dataArray, $file_path)
         VALUES ('$message_id', '$from_who', '$from_address', '$title', '$time', '$text', '$file_path');";        
         
     $DB_Connect->query($insertSQL_mail);
+
+}
+
+
+function saveMailtoPDF($dataArray, $file_path){
+
+    $title = $dataArray['title'];
+    // ob_start();
+    // echo "<html>";
+    // echo "寄件人: ".$dataArray['from_who']."<br>";
+    // echo "寄件人地址: ".$dataArray['from_address']."<br>";
+    // echo "信件標題: ".$title."<br>";
+    // echo "來信時間: ".$dataArray['time']."<br>";
+    // echo "附件: ".$file_path."<br>";//之後加if判斷輸出
+    // echo "<h1>信件內容請見下頁:</h1> "."<br>";
+    // echo $dataArray['message_text'];
+    // echo "</html>";
+    // $content = ob_get_clean();
+    $mail_info = '';
+    $mail_info .= "<h1>本頁為寄件資訊:</h1>  "."<br>";
+    $mail_info .= "寄件人: ".$dataArray['from_who']."<br>";
+    $mail_info .= "寄件人地址: ".$dataArray['from_address']."<br>";
+    $mail_info .= "信件標題: ".$title."<br>";
+    $mail_info .= "來信時間: ".$dataArray['time']."<br>";
+    $mail_info .= "附件: ".$file_path."<br>";//之後加if判斷輸出
+    $mail_info .= "<h1>信件內容請見下頁:</h1>  "."<br>";
+    $mail_info .= "<h1>=========================</h1>  "."<br>";
+    $titleForFilename = str_replace(array('\\','/',':','*','?','"','<','>','|'),' ',$title);
+    
+    $config = [
+        'mode' => '-aCJK', 
+        "autoScriptToLang" => true,
+        "autoLangToFont" => true,
+    ];
+
+    $mpdf =new \Mpdf\Mpdf($config);
+    $mpdf->WriteHTML($mail_info);
+    $mpdf->AddPage();
+    $mpdf->WriteHTML(($dataArray['message_text']));
+    $mpdf->Output("$titleForFilename".".pdf");
+
 
 }

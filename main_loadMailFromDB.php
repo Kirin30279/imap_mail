@@ -23,7 +23,7 @@
       <tbody>
         <?php
         
-        include 'DBinfo.php';
+        include 'src/DBinfo.php';
         
         $query = "SELECT * FROM `yahoo_huge` ORDER BY `time`DESC";
         $result = $DB_Connect->query($query);
