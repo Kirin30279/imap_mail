@@ -5,8 +5,9 @@ include 'LoginInfo.php';
 use Ddeboer\Imap\Server;
 //echo time();//測試用，正式可刪
 
-$server = new Server('pop.mail.yahoo.com');
-$connection = $server->authenticate($username, $password);
+// $server = new Server('pop.mail.yahoo.com');
+$server = new Server('pop.mail.yahoo.co.jp');
+$connection = $server->authenticate($username, $password);//在LoginInfo.php內
 
 $mailbox = $connection->getMailbox('INBOX');//只讀主收件匣
 $messages = $mailbox->getMessages();
@@ -27,7 +28,7 @@ foreach ($messages as $message) {
         */
         $file_path = saveAttachmentReturnPath($message);
 
-        //insertDataToDB($dataArray, $file_path);
+
         saveMailtoPDF($dataArray, $file_path);
         echo '<br>'."=============大分隔線-區分不同封信件=============".'<br>';//正式要刪
     }

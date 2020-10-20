@@ -6,7 +6,7 @@ use Ddeboer\Imap\Server;
 echo time();//測試用，正式可刪
 
 $server = new Server('pop.mail.yahoo.com');
-$connection = $server->authenticate($username, $password);
+$connection = $server->authenticate($username, $password);//在LoginInfo.php內
 
 $mailbox = $connection->getMailbox('INBOX');//只讀主收件匣
 $messages = $mailbox->getMessages();
