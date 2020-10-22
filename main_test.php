@@ -5,8 +5,10 @@ include 'LoginInfo.php';
 use Ddeboer\Imap\Server;
 
 // $server = new Server('imap.gmail.com');
+$server = new Server('imap.mail.yahoo.co.jp');
+
 // $server = new Server('pop.mail.yahoo.com');
-$server = new Server('pop.mail.yahoo.co.jp');
+// $server = new Server('pop.mail.yahoo.co.jp');
 // $connection is instance of \Ddeboer\Imap\Connection
 // $connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
 $connection = $server->authenticate($username, $password);
@@ -24,7 +26,7 @@ foreach ($mailboxes as $mailbox) {
     printf('Mailbox "%s" has %s messages', $mailbox->getName(), $mailbox->count());
 }
 
-$mailbox = $connection->getMailbox('INBOX');
+$mailbox = $connection->getMailbox('6代標取消');
 
 $messages = $mailbox->getMessages();
 
