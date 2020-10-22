@@ -1,5 +1,5 @@
 {
     "require": {
-        "ddeboer/imap": "^1.10"
+        "mpdf/mpdf": "^8.0"
     }
 }

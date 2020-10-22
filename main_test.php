@@ -1,14 +1,17 @@
 <?php
 date_default_timezone_set("Asia/Taipei");
-require __DIR__ . '/autoload.php';
-
+require __DIR__ . '/vendor/autoload.php';
+include 'LoginInfo.php';
 use Ddeboer\Imap\Server;
 
 // $server = new Server('imap.gmail.com');
-$server = new Server('export.imap.mail.yahoo.com');
+$server = new Server('imap.mail.yahoo.co.jp');
+
+// $server = new Server('pop.mail.yahoo.com');
+// $server = new Server('pop.mail.yahoo.co.jp');
 // $connection is instance of \Ddeboer\Imap\Connection
 // $connection = $server->authenticate('bibian.IMAP2020@gmail.com', 'bibian12345');
-$connection = $server->authenticate('andy860826@yahoo.com.tw', 'rcfftxtbiwgjrjkf');
+$connection = $server->authenticate($username, $password);
 
 $mailboxes = $connection->getMailboxes();
 
@@ -23,12 +26,11 @@ foreach ($mailboxes as $mailbox) {
     printf('Mailbox "%s" has %s messages', $mailbox->getName(), $mailbox->count());
 }
 
-$mailbox = $connection->getMailbox('Inbox');
+$mailbox = $connection->getMailbox('6代標取消');
 
 $messages = $mailbox->getMessages();
 
 foreach ($messages as $message) {
-    if($message->isSeen())  
     echo '<br>'."=============大分隔線-區分不同封信件=============".'<br>';
    
     echo '<br>'.'<----------------每封信的時間差----------------->'.'<br>';
@@ -82,9 +84,10 @@ foreach ($messages as $message) {
     var_dump($message->getTo()); 
     echo '<br>'.'<--------------------------------->'.'<br>';
 
-    echo '以下是$message->getDate()'.'<br>';
+    echo '以下是$message->getHeaders()'.'<br>';
     echo time();
-    var_dump(date('Y-m-d H:i:s',$message->getDate()->getTimestamp())); 
+    var_dump($message->getHeaders());
+    //var_dump(date('Y-m-d H:i:s',$message->getDate()->getTimestamp())); 
     /**'Y-m-d H:i:s'
      * 這個是信件的時間，格式如下：
      * object(DateTimeImmutable)#38 (3) { ["date"]=> string(26) "2020-10-05 07:54:19.000000" ["timezone_type"]=> int(2) ["timezone"]=> string(3) "GMT" }

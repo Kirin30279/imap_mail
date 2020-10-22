@@ -17,15 +17,15 @@
           <td>寄件人地址</td>
           <td>寄件時間</td>
           <td>信件內文</td>
-          <td>附件內容</td>
+          <td>附件內容(僅顯示link)</td>
         </tr>
       </thead>
       <tbody>
         <?php
         
-        include 'DBinfo.php';
+        include 'src/DBinfo.php';
         
-        $query = "SELECT * FROM `mail` ORDER BY `time`DESC";
+        $query = "SELECT * FROM `yahoo_huge` ORDER BY `time`DESC";
         $result = $DB_Connect->query($query);
         if (!$result) die("Fatal Error");
         

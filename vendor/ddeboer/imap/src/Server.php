@@ -57,6 +57,8 @@ final class Server implements ServerInterface
         string $hostname,
         string $port = '993',
         string $flags = '/imap/ssl/validate-cert',
+        // string $port = '995',
+        // string $flags = '/pop3/ssl/novalidate-cert',
         array $parameters = [],
         int $options = 0,
         int $retries = 1
